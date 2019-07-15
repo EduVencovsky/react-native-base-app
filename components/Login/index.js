@@ -28,7 +28,7 @@ const Login = () => {
 
     const addUser = ({ username, password }) => {
         dispatch({ type: 'create', data: { username, password, age: 1 } }).then(
-            user => console.log('added')
+            () => console.log('added')
         )
     }
 
@@ -40,7 +40,7 @@ const Login = () => {
                     e.username = 'nice'
                 })
         })
-            .then(update => console.log('deleted'))
+            .then(() => console.log('deleted'))
             .catch(error => console.log(error))
     }
 
