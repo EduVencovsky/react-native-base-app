@@ -43,16 +43,16 @@ UnconnectedErrorMessageFormik.propTypes = {
 
 export const ErrorMessageFormik = connect(UnconnectedErrorMessageFormik)
 
-const UnconnectedInputFormik = ({ formik, name, input, error }) => (
+const UnconnectedInputFormik = ({ formik, name, inputProps, errorProps }) => (
     <>
         <TextInput
             onChangeText={formik.handleChange(name)}
             onBlur={formik.handleBlur(name)}
             value={formik.values[name]}
-            {...input}
+            {...inputProps}
         />
         {formik.errors[name] && formik.touched[name] ? (
-            <ErrorMessage errors={formik.errors[name]} {...error} />
+            <ErrorMessage errors={formik.errors[name]} {...errorProps} />
         ) : null}
     </>
 )
@@ -60,8 +60,8 @@ const UnconnectedInputFormik = ({ formik, name, input, error }) => (
 UnconnectedInputFormik.propTypes = {
     name: PropTypes.string.isRequired,
     formik: PropTypes.object.isRequired,
-    input: PropTypes.object,
-    error: PropTypes.object
+    inputProps: PropTypes.object,
+    errorProps: PropTypes.object
 }
 
 export const InputFormik = connect(UnconnectedInputFormik)
