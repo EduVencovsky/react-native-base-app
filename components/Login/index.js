@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Text, SafeAreaView } from 'react-native'
 import {
     MainContainer,
@@ -10,6 +10,7 @@ import { Formik } from 'formik'
 import { TextInputFormik, InputFormik, ErrorMessageFormik } from '../TextInput'
 import Button from '../Button'
 import { useRealmData } from '../../hooks/useRealm'
+import { LanguageContext } from '../Language'
 import * as Yup from 'yup'
 
 const { version } = require('../../package.json')
@@ -32,15 +33,17 @@ const initialValues = {
 
 const Login = () => {
     const [users] = useRealmData('Users')
-
+    const { t, setLanguage } = useContext(LanguageContext)
     const checkUser = ({ username, password }) => {
         let loginUser = users.filter(
             user => user.username == username && user.password == password
         )
         if (loginUser.length > 0) {
             alert('good')
+            setLanguage('pt_BR')
         } else {
             alert('wrong')
+            setLanguage('en_US')
         }
     }
 
@@ -55,7 +58,7 @@ const Login = () => {
                     <>
                         <MainContainer>
                             <TopContainer>
-                                <Text>Hello</Text>
+                                <Text>{t('hello')}</Text>
                             </TopContainer>
                             <CenterContainer>
                                 <TextInputFormik
