@@ -8,7 +8,9 @@
     "test": "jest",
     "lint": "eslint .",
     "android": "react-native run-android",
-    "reverse": "adb reverse tcp:8081 tcp:8081"
+    "log-android": "react-native log-android || adb logcat -s ReactNative:V ReactNativeJS:V",
+    "reverse": "adb reverse tcp:8081 tcp:8081",
+    "get-realm": "adb -d shell \"run-as com.baseproject cat /data/data/com.baseproject/files/default.realm\" > data.realm"
   },
   "dependencies": {
     "formik": "^1.5.8",
@@ -17,6 +19,7 @@
     "react-native": "0.60.3",
     "react-native-gesture-handler": "^1.3.0",
     "react-navigation": "^3.11.0",
+    "realm": "^2.29.1",
     "styled-components": "^4.3.2",
     "yup": "^0.27.0"
   },
