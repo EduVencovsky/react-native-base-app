@@ -1,11 +1,18 @@
 import React from 'react'
 import { Text, SafeAreaView } from 'react-native'
-import { Container } from './styles'
+import {
+    MainContainer,
+    TopContainer,
+    CenterContainer,
+    BottomContainer
+} from './styles'
 import { Formik } from 'formik'
 import { TextInputFormik, InputFormik, ErrorMessageFormik } from '../TextInput'
 import Button from '../Button'
 import { useRealmData } from '../../hooks/useRealm'
 import * as Yup from 'yup'
+
+const { version } = require('../../package.json')
 
 const LoginValidation = Yup.object().shape({
     username: Yup.string()
@@ -24,50 +31,53 @@ const initialValues = {
 }
 
 const Login = () => {
-    const [users, dispatch] = useRealmData('Users')
+    const [users] = useRealmData('Users')
 
-    const addUser = ({ username, password }) => {
-        dispatch({ type: 'create', data: { username, password, age: 1 } }).then(
-            () => console.log('added')
+    const checkUser = ({ username, password }) => {
+        let loginUser = users.filter(
+            user => user.username == username && user.password == password
         )
-    }
-
-    const deleteLastUser = () => {
-        dispatch({
-            type: 'update',
-            update: data =>
-                data.filtered('age == 1').forEach(e => {
-                    e.username = 'nice'
-                })
-        })
-            .then(() => console.log('deleted'))
-            .catch(error => console.log(error))
+        if (loginUser.length > 0) {
+            alert('good')
+        } else {
+            alert('wrong')
+        }
     }
 
     return (
-        <SafeAreaView>
+        <SafeAreaView style={{ flex: 1 }}>
             <Formik
                 initialValues={initialValues}
                 validationSchema={LoginValidation}
-                onSubmit={addUser}
+                onSubmit={checkUser}
             >
                 {({ handleSubmit }) => (
                     <>
-                        <Container>
-                            <Text>Hello</Text>
-                            <TextInputFormik name="username" width="100%" />
-                            <ErrorMessageFormik name="username" />
-                            <InputFormik
-                                name="password"
-                                inputProps={{
-                                    width: '100%',
-                                    secureTextEntry: true
-                                }}
-                            />
-                            <Button text="hey" onPress={handleSubmit} />
-                            <Button text="delete" onPress={deleteLastUser} />
-                            <Text>{JSON.stringify(users)}</Text>
-                        </Container>
+                        <MainContainer>
+                            <TopContainer>
+                                <Text>Hello</Text>
+                            </TopContainer>
+                            <CenterContainer>
+                                <TextInputFormik
+                                    name="username"
+                                    width="80%"
+                                    placeholder="Usuario"
+                                />
+                                <ErrorMessageFormik name="username" />
+                                <InputFormik
+                                    name="password"
+                                    inputProps={{
+                                        width: '80%',
+                                        placeholder: 'Senha',
+                                        secureTextEntry: true
+                                    }}
+                                />
+                                <Button text="Login" onPress={handleSubmit} />
+                            </CenterContainer>
+                            <BottomContainer>
+                                <Text>{version}</Text>
+                            </BottomContainer>
+                        </MainContainer>
                     </>
                 )}
             </Formik>

@@ -10,7 +10,9 @@ export const Input = styled.TextInput`
         css`
             width: ${width};
         `}
-
+    
+    padding: 20px;
+    margin-bottom: 10px;
     color: black;
 `
 
