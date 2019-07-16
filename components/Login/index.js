@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Text, SafeAreaView } from 'react-native'
 import * as Yup from 'yup'
 import { Formik } from 'formik'
@@ -12,6 +12,7 @@ import {
 import { TextInputFormik, InputFormik, ErrorMessageFormik } from '../TextInput'
 import Button from '../Button'
 import { useRealmData } from '../../hooks/useRealm'
+import { useStorage } from '../../hooks/useStorage'
 import { LanguageContext, T } from '../Language'
 
 const { version } = require('../../package.json')
@@ -21,14 +22,20 @@ const LoginValidation = Yup.object().shape({
     password: Yup.string().required('Required')
 })
 
-const initialValues = {
-    username: '',
-    password: ''
-}
-
 const Login = ({ navigation }) => {
     const [users] = useRealmData('Users')
+    const [lastLogin, setLastLogin] = useStorage('lastLogin', null)
     const { t } = useContext(LanguageContext)
+    const [initialValues, setInitialValues] = useState({
+        username: '',
+        password: ''
+    })
+
+    useEffect(() => {
+        if (lastLogin) {
+            setInitialValues(lastLogin)
+        }
+    }, [lastLogin])
 
     const checkUser = ({ username, password }) => {
         let loginUser = users.filter(
@@ -37,7 +44,7 @@ const Login = ({ navigation }) => {
                 user.password.toLowerCase() == password.toLowerCase()
         )
         if (loginUser.length > 0) {
-            navigation.navigate('Home')
+            setLastLogin(loginUser[0]).then(() => navigation.navigate('Home'))
         } else {
             alert('bad')
         }
@@ -46,6 +53,7 @@ const Login = ({ navigation }) => {
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <Formik
+                enableReinitialize
                 initialValues={initialValues}
                 validationSchema={LoginValidation}
                 onSubmit={checkUser}

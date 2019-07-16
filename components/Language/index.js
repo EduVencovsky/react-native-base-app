@@ -13,7 +13,6 @@ export const LanguageContext = React.createContext(deviceLanguage)
 
 export const T = ({ string }) => {
     const { language } = useContext(LanguageContext)
-    console.log('string', string)
     let res =
         languageJson[string] && languageJson[string][language]
             ? languageJson[string][language]

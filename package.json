@@ -13,6 +13,7 @@
     "get-realm": "adb -d shell \"run-as com.baseproject cat /data/data/com.baseproject/files/default.realm\" > data.realm"
   },
   "dependencies": {
+    "@react-native-community/async-storage": "^1.5.1",
     "formik": "^1.5.8",
     "jetifier": "^1.6.2",
     "react": "16.8.6",
