@@ -19,7 +19,9 @@ Home.propTypes = {
 Home.navigationOptions = ({ navigation }) => ({
     headerTitle: 'Home',
     headerLeft: (
-        <Icon.Button
+        <Icon
+            size={25}
+            style={{ marginLeft: 10, height: 25, width: 25 }}
             name="bars"
             onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
         />
