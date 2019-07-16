@@ -1,10 +1,10 @@
 {
   "login": {
     "en_US": "Login",
-    "pt_BR": "Logar"
+    "pt_BR": "Login"
   },
-  "hello": {
-    "en_US": "Hello",
-    "pt_BR": "Ois"
+  "welcome": {
+    "en_US": "Welcome",
+    "pt_BR": "Bem-Vindo"
   }
 }

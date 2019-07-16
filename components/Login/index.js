@@ -1,29 +1,24 @@
 import React, { useContext } from 'react'
 import { Text, SafeAreaView } from 'react-native'
+import * as Yup from 'yup'
+import { Formik } from 'formik'
+import PropTypes from 'prop-types'
 import {
     MainContainer,
     TopContainer,
     CenterContainer,
     BottomContainer
 } from './styles'
-import { Formik } from 'formik'
 import { TextInputFormik, InputFormik, ErrorMessageFormik } from '../TextInput'
 import Button from '../Button'
 import { useRealmData } from '../../hooks/useRealm'
-import { LanguageContext } from '../Language'
-import * as Yup from 'yup'
+import { LanguageContext, T } from '../Language'
 
 const { version } = require('../../package.json')
 
 const LoginValidation = Yup.object().shape({
-    username: Yup.string()
-        .min(2, 'Too Short!')
-        .max(50, 'Too Long!')
-        .required('Required'),
-    password: Yup.string()
-        .min(2, 'Too Short!')
-        .max(50, 'Too Long!')
-        .required('Required')
+    username: Yup.string().required('Required'),
+    password: Yup.string().required('Required')
 })
 
 const initialValues = {
@@ -31,19 +26,20 @@ const initialValues = {
     password: ''
 }
 
-const Login = () => {
+const Login = ({ navigation }) => {
     const [users] = useRealmData('Users')
-    const { t, setLanguage } = useContext(LanguageContext)
+    const { t } = useContext(LanguageContext)
+
     const checkUser = ({ username, password }) => {
         let loginUser = users.filter(
-            user => user.username == username && user.password == password
+            user =>
+                user.username.toLowerCase() == username.toLowerCase() &&
+                user.password.toLowerCase() == password.toLowerCase()
         )
         if (loginUser.length > 0) {
-            alert('good')
-            setLanguage('pt_BR')
+            navigation.navigate('Home')
         } else {
-            alert('wrong')
-            setLanguage('en_US')
+            alert('bad')
         }
     }
 
@@ -58,7 +54,9 @@ const Login = () => {
                     <>
                         <MainContainer>
                             <TopContainer>
-                                <Text>{t('hello')}</Text>
+                                <Text>
+                                    <T string="welcome" />
+                                </Text>
                             </TopContainer>
                             <CenterContainer>
                                 <TextInputFormik
@@ -75,7 +73,10 @@ const Login = () => {
                                         secureTextEntry: true
                                     }}
                                 />
-                                <Button text="Login" onPress={handleSubmit} />
+                                <Button
+                                    text={t('login')}
+                                    onPress={handleSubmit}
+                                />
                             </CenterContainer>
                             <BottomContainer>
                                 <Text>{version}</Text>
@@ -86,6 +87,10 @@ const Login = () => {
             </Formik>
         </SafeAreaView>
     )
+}
+
+Login.propTypes = {
+    navigation: PropTypes.object
 }
 
 Login.navigationOptions = ({}) => {

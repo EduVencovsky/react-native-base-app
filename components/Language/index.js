@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { Platform, NativeModules } from 'react-native'
 import PropTypes from 'prop-types'
 
@@ -10,6 +10,16 @@ const deviceLanguage =
         : NativeModules.I18nManager.localeIdentifier
 
 export const LanguageContext = React.createContext(deviceLanguage)
+
+export const T = ({ string }) => {
+    const { language } = useContext(LanguageContext)
+    console.log('string', string)
+    let res =
+        languageJson[string] && languageJson[string][language]
+            ? languageJson[string][language]
+            : languageJson[string]['en_US']
+    return res
+}
 
 export default function Language({ children }) {
     const [language, setLanguage] = useState(deviceLanguage)
