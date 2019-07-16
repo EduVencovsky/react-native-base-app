@@ -5,7 +5,11 @@ export const useStorage = (key, initialValue) => {
     const [data, setData] = useState(null)
 
     const set = async newData => {
-        await AsyncStorage.setItem(`@${key}`, JSON.stringify(newData))
+        if (newData === null) {
+            await AsyncStorage.removeItem(`@${key}`)
+        } else {
+            await AsyncStorage.setItem(`@${key}`, JSON.stringify(newData))
+        }
         return setData(newData)
     }
 

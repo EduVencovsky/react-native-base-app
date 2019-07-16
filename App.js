@@ -12,9 +12,16 @@ import Config from './components/Config'
 import List from './components/List'
 import Language from './components/Language'
 
+const HomeStack = createStackNavigator(
+    { Home },
+    {
+        headerLayoutPreset: 'center'
+    }
+)
+
 const TabNavigator = createBottomTabNavigator({
     Home: {
-        screen: Home,
+        screen: HomeStack,
         tabBarLabel: 'Home'
     },
     List: {

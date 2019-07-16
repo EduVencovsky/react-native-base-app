@@ -1,13 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { View, Text } from 'react-native'
+import { DrawerActions } from 'react-navigation'
+import Icon from 'react-native-vector-icons/FontAwesome'
 
-const Home = ({ navigation }) => {
+const Home = () => {
     return (
         <View>
-            <Text onPress={() => navigation.toggleDrawer()}>
-                HEY asd aas s adasdaa
-            </Text>
+            <Text>Home</Text>
         </View>
     )
 }
@@ -15,5 +15,15 @@ const Home = ({ navigation }) => {
 Home.propTypes = {
     navigation: PropTypes.object
 }
+
+Home.navigationOptions = ({ navigation }) => ({
+    headerTitle: 'Home',
+    headerLeft: (
+        <Icon.Button
+            name="bars"
+            onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
+        />
+    )
+})
 
 export default Home
