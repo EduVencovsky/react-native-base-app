@@ -67,7 +67,7 @@ export function useRealmData(name, query = null) {
     return [data, dispatch]
 }
 
-function useRealm() {
+export function useRealm() {
     const [realm, setRealm] = useState(null)
 
     useEffect(() => {
@@ -76,5 +76,3 @@ function useRealm() {
 
     return realm
 }
-
-export default useRealm

@@ -4,10 +4,9 @@ import AsyncStorage from '@react-native-community/async-storage'
 export const useStorage = (key, initialValue) => {
     const [data, setData] = useState(null)
 
-    const set = newData => {
-        return AsyncStorage.setItem(`@${key}`, JSON.stringify(newData)).then(
-            () => setData(newData)
-        )
+    const set = async newData => {
+        await AsyncStorage.setItem(`@${key}`, JSON.stringify(newData))
+        return setData(newData)
     }
 
     useEffect(() => {

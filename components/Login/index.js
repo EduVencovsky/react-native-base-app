@@ -11,10 +11,8 @@ import {
 } from './styles'
 import { TextInputFormik, InputFormik, ErrorMessageFormik } from '../TextInput'
 import Button from '../Button'
-import { useRealmData } from '../../hooks/useRealm'
-import { useStorage } from '../../hooks/useStorage'
+import { useRealmData, useStorage } from '../../hooks'
 import { LanguageContext, T } from '../Language'
-
 const { version } = require('../../package.json')
 
 const LoginValidation = Yup.object().shape({
