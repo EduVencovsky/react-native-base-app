@@ -9,7 +9,7 @@ import {
 import Login from './components/Login'
 import Home from './components/Home'
 import Config from './components/Config'
-import List from './components/List'
+import Map from './components/Map'
 import Language from './components/Language'
 
 const HomeStack = createStackNavigator(
@@ -24,9 +24,9 @@ const TabNavigator = createBottomTabNavigator({
         screen: HomeStack,
         tabBarLabel: 'Home'
     },
-    List: {
-        screen: List,
-        tabBarLabel: 'List'
+    Map: {
+        screen: Map,
+        tabBarLabel: 'Map'
     }
 })
 
